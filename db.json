@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": 0,
+      "userId": "1111",
+      "userPw": "1111"
+    },
+    {
+      "id": 1,
+      "userId": "2222",
+      "userPw": "2222"
+    },
+
+    {
+      "id": 2,
+      "userId": "3333",
+      "userPw": "3333"
+    }
+  ],
+  "todos": [
+    {
+      "id": 0,
+      "todo": "react"
+    },
+    {
+      "id": 1,
+      "todo": "spring"
+    },
+    {
+      "id": 2,
+      "todo": "java"
+    }
+  ]
+}
