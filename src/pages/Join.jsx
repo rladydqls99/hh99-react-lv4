@@ -29,9 +29,6 @@ function Join() {
     return <h1>로딩중입니다..</h1>;
   }
 
-  const usersInfo = data.data;
-  console.log(usersInfo);
-
   // ----------------------------------------
 
   const getUserId = (e) => {
@@ -45,7 +42,7 @@ function Join() {
 
   // 회원가입 : 중복체크 후, db 에 저장
   const onClickButton = () => {
-    const repeatId = usersInfo.filter((user) => user.userId === userID);
+    const repeatId = data.filter((user) => user.userId === userID);
     if (repeatId.length > 0) {
       alert('중복된 id 입니다. 다른 값으로 입력해주세요.');
       return;
