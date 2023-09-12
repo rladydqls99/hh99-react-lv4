@@ -1,20 +1,36 @@
 import axios from 'axios';
+import { Cookies } from 'react-cookie';
 
-// users를 가져오는 api
-const getUsers = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/users`);
-  return response.data;
-};
-
-// todos를 가져오는 api
-const getTodos = async () => {
-  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/todos`);
-  return response.data;
-};
+const cookies = new Cookies();
 
 // 회원가입
-const addTodo = async (newTodo) => {
-  await axios.post(`${process.env.REACT_APP_SERVER_URL}/users`, newTodo);
+const addUser = async (userInfo) => {
+  const result = await axios.post(`http://3.38.191.164/register`, userInfo);
+  console.log(result);
 };
 
-export { getUsers, getTodos, addTodo };
+// 로그인
+const getUsers = async () => {
+  const response = await axios.post(`http://3.38.191.164/login`);
+  return response.data;
+};
+
+// 유저 인증 확인
+const getTodos = async () => {
+  const response = await axios.get(`${process.env.REACT_APP_SERVER_URL}/user`);
+  return response.data;
+};
+
+//
+const getData = async () => {
+  const accessToken = cookies.get('accessToken');
+  console.log('accessToken : ', accessToken);
+  const response = await axios.get('http://3.38.191.164/user', {
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${accessToken}`,
+    },
+  });
+  console.log('response : ', response);
+};
+export { getUsers, getTodos, addUser, getData };

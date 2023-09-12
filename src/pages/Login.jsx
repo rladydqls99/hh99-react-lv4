@@ -1,8 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
-import { getUsers } from '../api/todolist';
-import { useQuery } from 'react-query';
+import axios from 'axios';
+import { useCookies } from 'react-cookie';
 
 function Login() {
   const navigate = useNavigate();
@@ -10,26 +10,36 @@ function Login() {
   // id와 pw 상태관리 --------------------------
   const [userID, setUserID] = useState('');
   const [userPw, setUserPw] = useState('');
+  const [cookies, setCookies] = useCookies(['accessToken']);
 
-  const { isLoading, data } = useQuery('users', getUsers);
-  if (isLoading) {
-    return <h1>로딩중입니다..</h1>;
-  }
-
-
-  const login = () => {
-    let matchId = data.filter((user) => user.userId === userID);
-    let matchPw = data.filter((user) => user.userPw === userPw);
-    if (matchId.length > 0) {
-      if (matchPw.length > 0) {
-        navigate(`/main/${matchId[0].id}`);
-      } else {
-        alert('일치하는 비밀번호가 없습니다.');
-      }
-    } else {
-      alert('일치하는 아이디가 없습니다.');
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post(`http://3.38.191.164/login`, {
+        id: userID,
+        password: userPw,
+      });
+      console.log(response);
+      setCookies('accessToken', response.data.token);
+    } catch (err) {
+      console.log(err.response.data);
     }
-    console.log(matchId, matchPw);
+    setUserID('');
+    setUserPw('');
+  };
+
+  const getData = async () => {
+    try {
+      const accessToken = cookies.accessToken;
+      // console.log('accessToken : ', accessToken);
+      const response = await axios.get(`http://3.38.191.164/user`, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
+      console.log(response.data.message);
+    } catch (err) {
+      console.log(err.response.data);
+    }
   };
 
   const getUserId = (e) => {
@@ -53,7 +63,7 @@ function Login() {
         <input type='password' value={userPw} onChange={getUserPw} />
       </div>
       <div>
-        <button onClick={login}>로그인</button>
+        <button onClick={handleLogin}>로그인</button>
         <button
           onClick={() => {
             navigate('/join');
@@ -61,6 +71,7 @@ function Login() {
         >
           회원가입
         </button>
+        <button onClick={getData}>데이터 가져오기</button>
       </div>
     </>
   );
