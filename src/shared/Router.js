@@ -11,7 +11,6 @@ function Router() {
         <Route path='/' element={<Login />}></Route>
         <Route path='/join' element={<Join />}></Route>
         <Route path='/main/:id' element={<Main />}></Route>
-
       </Routes>
     </BrowserRouter>
   );

@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Cookies } from 'react-cookie';
+import { getCookie } from '../cookie/cookie';
 
 const cookies = new Cookies();
 
@@ -33,4 +34,9 @@ const getData = async () => {
   });
   console.log('response : ', response);
 };
-export { getUsers, getTodos, addUser, getData };
+
+const isLogin = () => {
+  let isCookie = getCookie('accessToken') ? true : false;
+  return isCookie;
+};
+export { getUsers, getTodos, addUser, getData, isLogin };
