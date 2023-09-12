@@ -10,9 +10,20 @@ function Login() {
   const navigate = useNavigate();
 
   // id와 pw 상태관리 --------------------------
+
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
+  
+  const getUserId = (e) => {
+    const { value } = e.target;
+    setId(value);
+  };
+  const getUserPw = (e) => {
+    const { value } = e.target;
+    setPassword(value);
+  };
 
+  // 로그인 ---------------------------------------------
   const handleLogin = async () => {
     try {
       const response = await axios.post(`http://3.38.191.164/login`, {
@@ -36,20 +47,8 @@ function Login() {
     setPassword('');
   };
 
-  const remove_cookie = () => {
-    removeCookie('accessToken');
-  };
-
-  const getUserId = (e) => {
-    const { value } = e.target;
-    setId(value);
-  };
-  const getUserPw = (e) => {
-    const { value } = e.target;
-    setPassword(value);
-  };
-
   // ----------------------------------------
+  
   if (!isLogin()) {
     return (
       <Wrap>

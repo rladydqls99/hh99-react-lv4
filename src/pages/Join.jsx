@@ -13,7 +13,16 @@ function Join() {
   const [id, setId] = useState('');
   const [password, setPassword] = useState('');
 
-  // ----------------------------------------
+  const getUserId = (e) => {
+    const { value } = e.target;
+    setId(value);
+  };
+  const getUserPW = (e) => {
+    const { value } = e.target;
+    setPassword(value);
+  };
+
+  // 회원가입 ----------------------------------------
 
   const postUser = async () => {
     try {
@@ -28,15 +37,6 @@ function Join() {
   };
 
   // ----------------------------------------
-
-  const getUserId = (e) => {
-    const { value } = e.target;
-    setId(value);
-  };
-  const getUserPW = (e) => {
-    const { value } = e.target;
-    setPassword(value);
-  };
 
   if (!isLogin()) {
     return (

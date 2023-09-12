@@ -8,10 +8,13 @@ import styled from 'styled-components';
 function Main() {
   const navigate = useNavigate();
 
+  // 로그아웃 --------------------------------------
+
   const logoutButton = () => {
     removeCookie('accessToken');
     navigate('/');
   };
+  // 유저 인증 확인 ----------------------------------------
 
   const getData = async () => {
     try {
@@ -33,7 +36,7 @@ function Main() {
       console.log(err.response);
     }
   };
-
+  // ------------------------------------------------------------
   if (isLogin()) {
     return (
       <div>
