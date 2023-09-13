@@ -11,6 +11,7 @@ function Main() {
   if (isLoading) {
     return <h1>로딩중입니다..</h1>;
   }
+  
   return (
     <div>
       <h1>Main</h1>
