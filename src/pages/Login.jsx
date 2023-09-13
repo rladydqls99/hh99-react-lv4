@@ -31,7 +31,7 @@ function Login() {
         setCookie("accessToken", response.data.token);
       }
       alert("로그인이 완료되었습니다.");
-      navigate(`/main/${response.data.token}`);
+      navigate(`/main/${userId}`);
     } catch (err) {
       alert(err.response.data.message);
     }

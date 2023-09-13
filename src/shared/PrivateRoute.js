@@ -1,12 +1,27 @@
 import React from "react";
-import { Navigate } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
+import { getCookie } from "../cookies/cookies";
 
-function PrivateRoute({ authenticated, component: Component }) {
-  return authenticated ? (
-    Component
+const PrivateRoute = () => {
+  const access = getCookie("accessToken");
+  const isLogin = !!access;
+
+  return isLogin ? (
+    <Outlet />
   ) : (
-    <Navigate to="/" {...alert("접근할 수 없는 페이지입니다.")} />
+    <Navigate to={"/"} {...alert("접근할 수 없는 페이지입니다.")} />
   );
-}
+};
 
-export default PrivateRoute;
+const PublicRoute = () => {
+  const access = getCookie("accessToken");
+  const isLogin = !!access;
+
+  return !isLogin ? (
+    <Outlet />
+  ) : (
+    <Navigate to={"/main/:id"} {...alert("이미 로그인 되어있습니다.")} />
+  );
+};
+
+export { PrivateRoute, PublicRoute };

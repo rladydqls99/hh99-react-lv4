@@ -5,24 +5,23 @@ import Join from "../pages/Join";
 import Main from "../pages/Main";
 import { CookiesProvider } from "react-cookie";
 import { getCookie } from "../cookies/cookies";
-import PrivateRoute from "./PrivateRoute";
+import { PrivateRoute, PublicRoute } from "./PrivateRoute";
 
 function Router() {
   const access = getCookie("accessToken");
-  console.log(access);
+  console.log(!!access);
 
   return (
     <CookiesProvider>
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />}></Route>
-          <Route path="/join" element={<Join />}></Route>
-          <Route
-            path="/main/:id"
-            element={
-              <PrivateRoute authenticated={access} component={<Main />} />
-            }
-          ></Route>
+          <Route element={<PublicRoute />}>
+            <Route path="/" element={<Login />}></Route>
+            <Route path="/join" element={<Join />}></Route>
+          </Route>
+          <Route element={<PrivateRoute />}>
+            <Route path="/main/:id" element={<Main />} />
+          </Route>
         </Routes>
       </BrowserRouter>
     </CookiesProvider>
